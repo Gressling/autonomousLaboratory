@@ -1,4 +1,5 @@
-# autonomous-laboratory
+# Autonomous Laboratory System
+
 An autonomous chemistry lab is designed to perform chemical research and experiments with minimal human intervention, leveraging robotics, AI, and advanced analytical techniques. But even in autonomous chemistry labs, human technicians play crucial roles, including:
 
 * Supervision: Overseeing operations to ensure systems function correctly and safely.
