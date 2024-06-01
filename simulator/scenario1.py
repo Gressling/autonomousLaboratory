@@ -41,6 +41,42 @@ time.sleep(1)
 
 # -- SCENARIO START -------------------------
 client.publish("talk", payload="SPEAK Hello World!")
+time.sleep(5)
+client.publish("talk", payload="SPEAK Anyone there?")
+time.sleep(5)
+client.publish("talk", payload="SPEAK OK, some scale work.")
+client.publish("scale", payload="SCALE 244")
+time.sleep(1)
+
+# transferred with chatGPT
+
+# Researcher speaks into the microphone to prepare the titration setup.
+client.publish("Microphone/STT", payload="PREPARE TITRATION SETUP")
+
+# The smart lab system returns a checklist of required items and setup steps for the titration.
+client.publish("Speaker/TTS", payload="RETURN TITRATION SETUP CHECKLIST")
+
+# Camera captures frames of the lab to detect the presence and correct setup of required items.
+client.publish("Camera/CV", payload="DETECT SETUP")
+
+# Camera confirms the presence of the titrant and indicator solution.
+client.publish("Camera/CV", payload="VERIFY TITRANT INDICATOR")
+
+# Additional verification steps by the camera.
+client.publish("Camera/CV", payload="VERIFY ...")
+
+# The smart lab system confirms experiment can begin.
+client.publish("Speaker/TTS", payload="RETURN CONFIRMATION")
+
+# Buffered readings from the scale, pH meter, and thermometer are analyzed.
+client.publish("Scale/PH_Meter/Thermometer", payload="ANALYZE [PH METER] READINGS")
+
+# Thalamus detects the pH level approaching the endpoint and determines necessary actions.
+client.publish("Thalamus", payload="DECELERATE TITRANT ADDITION")
+
+# The speaker outputs the command to slow down the addition of titrant.
+client.publish("Speaker/TTS", payload="RETURN MESSAGE")
+
 
 # -- SCENARIO END -------------------------
 
