@@ -17,7 +17,7 @@ signal.signal(signal.SIGTERM, exit_handler)
 # ----------------- MQTT Configuration
 client = paho.Client(client_id="dev", userdata=None, protocol=paho.MQTTv5)
 client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
-client.username_pw_set("cheminformatics", "Cogni88.") # input())
+client.username_pw_set("cheminformatics", # input())
 
 # ----------------- MQTT Event Handlers
 def on_connect(client, userdata, flags, rc, properties):
