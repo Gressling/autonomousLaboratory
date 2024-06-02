@@ -48,17 +48,6 @@ client.publish("talk", payload="SPEAK OK, some scale work.")
 client.publish("scale", payload="SCALE 244")
 time.sleep(1)
 
-
-
-
-# -- SCENARIO END -------------------------
-
-client.publish("STATUS", payload="talk-simulator: Stopped")
-time.sleep(1)
-client.disconnect()
-print("Exit.")
-exit(0)
-
 # transferred with chatGPT
 
 # Researcher speaks into the microphone to prepare the titration setup.
@@ -87,3 +76,13 @@ client.publish("Thalamus", payload="DECELERATE TITRANT ADDITION")
 
 # The speaker outputs the command to slow down the addition of titrant.
 client.publish("Speaker/TTS", payload="RETURN MESSAGE")
+
+
+# -- SCENARIO END -------------------------
+
+client.publish("STATUS", payload="talk-simulator: Stopped")
+time.sleep(1)
+client.disconnect()
+print("Exit.")
+exit(0)
+
