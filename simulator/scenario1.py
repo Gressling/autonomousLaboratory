@@ -2,6 +2,9 @@ import signal
 import time
 import paho.mqtt.client as paho
 from paho import mqtt
+from utilities.env_manager import utils
+
+utils.load_and_print_env_variables()
 
 def exit_handler(signal, frame):
     """Handles termination signals."""
