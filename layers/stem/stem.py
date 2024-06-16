@@ -1,4 +1,17 @@
 # ----------------- Imports
+# env_manager/utils.py
+import os
+from utilities.env_manager import utils
+
+import os
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+print(os.getenv('AICHEM_MQTT_LOGIN'))
+print(os.getenv('AICHEM_DB_LOGIN'))
+
+
+utils.load_and_print_env_variables()
+
 import signal
 import time
 import mysql.connector
@@ -20,10 +33,29 @@ def exit_handler(signal, frame):
 signal.signal(signal.SIGINT, exit_handler)
 signal.signal(signal.SIGTERM, exit_handler)
 
+# ----------------- Database Configuration
+dbpw=os.getenv('AICHEM_DB_LOGIN')
+print(dbpw)
+
+cnx = mysql.connector.connect(
+    user='situation', 
+    password=dbpw,
+    host='den1.mysql6.gear.host',
+    database='situation'
+)
+cursor = cnx.cursor()
+
+query = (
+    "INSERT INTO `situation`.`situation2` (`channel`, `prompt`) "
+    "VALUES (%s, %s);"
+)
+
 # ----------------- MQTT Configuration
 client = paho.Client(client_id="dev", userdata=None, protocol=paho.MQTTv5)
 client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
-client.username_pw_set("cheminformatics", input())
+mqttpw=os.getenv('AICHEM_MQTT_LOGIN')
+print(mqttpw)
+client.username_pw_set("cheminformatics", mqttpw)
 
 # ----------------- MQTT Event Handlers
 def on_message(client, userdata, message):
@@ -32,7 +64,7 @@ def on_message(client, userdata, message):
     mymessage = message.payload.decode('utf-8')
     print(f"Received message {channel}: {mymessage}")
     
-    values = (channel, 'EVENT', mymessage)
+    values = (channel, mymessage)
     cursor.execute(query, values)
     cnx.commit()
 
@@ -49,17 +81,20 @@ client.on_connect = on_connect
 client.on_message = on_message
 
 # ----------------- Database Configuration
+dbpw=os.getenv('AICHEM_DB_LOGIN')
+print(dbpw)
+
 cnx = mysql.connector.connect(
     user='situation', 
-    password=input(),
+    password=dbpw,
     host='den1.mysql6.gear.host',
     database='situation'
 )
 cursor = cnx.cursor()
 
 query = (
-    "INSERT INTO `situation`.`situation` (`entity`, `event`, `content`) "
-    "VALUES (%s, %s, %s);"
+    "INSERT INTO `situation`.`situation2` (`channel`, `prompt`) "
+    "VALUES (%s, %s);"
 )
 
 # ----------------- Start MQTT and Publish Initial Message

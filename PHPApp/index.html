@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <title>Autonomous Laboratory</title>
+</head>
+<body>
+
+<div id="data-container">
+    <!-- Data will be loaded here -->
+</div>
+
+<script>
+function fetchData() {
+    fetch('data.php')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('data-container');
+            container.innerHTML = ''; // Clear previous content
+            data.forEach(row => {
+                let rowContent = '';
+                for (const [key, value] of Object.entries(row)) {
+                    rowContent += `${key}: ${value} - `;
+                }
+                rowContent += '<br>';
+                container.innerHTML += rowContent;
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
+// Fetch data every 2 seconds
+setInterval(fetchData, 2000);
+
+// Initial fetch
+fetchData();
+</script>
+
+</body>
+</html>
