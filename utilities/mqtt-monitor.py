@@ -3,6 +3,13 @@ import signal
 import time
 import paho.mqtt.client as paho
 from paho import mqtt
+import os
+
+import os
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+print(os.getenv('AICHEM_MQTT_LOGIN'))
+print(os.getenv('AICHEM_DB_LOGIN'))
 
 # ----------------- Signal Handling
 def exit_handler(signal, frame):
@@ -100,7 +107,9 @@ client.on_connect = on_connect
 # enable TLS for secure connection
 client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
 # set username and password
-client.username_pw_set("cheminformatics", input("Enter MQTT password: "))
+mqttpw=os.getenv('AICHEM_MQTT_LOGIN')
+print(mqttpw)
+client.username_pw_set("cheminformatics", mqttpw)
 # connect to HiveMQ Cloud on port 8883 (default for MQTT)
 client.connect("9b15b5bc687c4ecfb410a4fbe8df96b6.s2.eu.hivemq.cloud", 8883)
 
@@ -113,7 +122,7 @@ client.on_publish = on_publish
 client.subscribe("#", qos=1)
 
 # a single publish, this can also be done in loops, etc.
-client.publish("test", payload="hot", qos=1)
+client.publish("test", payload="MESSAGE test", qos=1)
 
 # loop_forever for simplicity, here you need to stop the loop manually
 # you can also use loop_start and loop_stop
