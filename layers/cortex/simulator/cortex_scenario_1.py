@@ -1,4 +1,4 @@
-# URL to DB-Test:   http://gressling.net/AutonomousLaboratory/situation.html 
+# URL to scenario2-DB viewer:   http://gressling.net/AutonomousLaboratory/situation.html 
 
 # ----------------- Imports
 import mysql.connector
@@ -7,6 +7,8 @@ from dotenv import load_dotenv, find_dotenv
 
 # Load environment variables
 load_dotenv(find_dotenv())
+
+scenario = "CORTEX_" + input("Cortex scenario name: ")
 
 # ----------------- Database Configuration
 dbpw = os.getenv('AICHEM_DB_LOGIN')
@@ -27,7 +29,7 @@ try:
         "INSERT INTO `situation`.`situation2` (`channel`, `prompt`, `comment`) "
         "VALUES (%s, %s, %s);"
     )
-    values = ("test", "Hello World", "Cortex_Scenario_1")
+    values = ("test", "Hello World", scenario)
 
     # Execute the query and commit the transaction
     cursor.execute(query, values)
