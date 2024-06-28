@@ -20,10 +20,15 @@ if ($result->num_rows > 0) {
 } else {
   echo "0 results";
 }
+
+// Fetch the current timestamp from the database
+$timeResult = $conn->query("SELECT CURRENT_TIMESTAMP()");
+$current_time = $timeResult->fetch_assoc()['CURRENT_TIMESTAMP()'];
+
 $conn->close();
 
 $response = array(
-  'current_time' => date("Y-m-d H:i:s"),
+  'current_time' => $current_time,
   'data' => $data
 );
 

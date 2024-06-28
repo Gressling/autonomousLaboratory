@@ -66,13 +66,13 @@
           debugInfo.innerHTML = ''; // Clear existing debug information
 
           const serverTime = new Date(current_time);
-          const correctionFactorMs = clientTime - serverTime - 1630000;
+          const correctionFactorMs = clientTime - serverTime;
 
           data.forEach(item => {
             const originalTimestamp = new Date(item.last_insert_timestamp);
             const adjustedTimestamp = new Date(originalTimestamp.getTime() + correctionFactorMs);
             const diffInMs = clientTime - adjustedTimestamp;
-            const diffInSeconds = diffInMs / 1000 + 1844;
+            const diffInSeconds = diffInMs / 1000;
             const diffInMinutes = diffInSeconds / 60;
             const diffInHours = diffInMinutes / 60;
             const diffInDays = diffInHours / 24;
